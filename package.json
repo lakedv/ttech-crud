@@ -1,0 +1,20 @@
+{
+  "name": "ttech-crud",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type":"module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "G. Mirarchi",
+  "license": "MIT",
+  "description": "API CRUD Para Talento TECH",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
