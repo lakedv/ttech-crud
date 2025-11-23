@@ -1,4 +1,4 @@
-import { getHealthStatus } from "../utils/healthCheck.js";
+import { getHealthStatus } from "../Utility/healthCheck.js";
 
 export const healthCheck = (req, res) => {
     const healthData = getHealthStatus();

@@ -1,6 +1,6 @@
 import express from "express";
-import { home } from "../controllers/homeController.js";
-import { healthCheck } from "../controllers/healthController.js";
+import { home } from "../Controllers/homeController.js";
+import { healthCheck } from "../Controllers/healthController.js";
 
 const router = express.Router();
 

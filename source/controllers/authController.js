@@ -1,6 +1,6 @@
-import {createUser, findUserByEmail} from "../services/userService.js";
+import {createUser, findUserByEmail} from "../Services/userService.js";
 import bcrypt from "bcrypt";
-import { generateToken } from "../utils/jwt.js";
+import { generateToken } from "../Utility/jwt.js";
 
 export const register = async (req, res) => {
     try{

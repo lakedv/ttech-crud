@@ -1,4 +1,4 @@
-import { getAllUsers, deleteUser } from "../services/userService.js";
+import { getAllUsers, deleteUser } from "../Services/userService.js";
 
 export const getUsers = (req, res)=> {
     res.status(200).json({users: getAllUsers()});
