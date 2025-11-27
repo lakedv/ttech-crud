@@ -1,11 +1,40 @@
-import { getAllUsers, deleteUser } from "../Services/userService.js";
+import UserService from "../Services/UserService.js";
+import UserRegisterRequest from "../DTOs/UserRegisterRequest.js";
+import UserLoginRequest from "../DTOs/UserLoginRequest.js";
 
-export const getUsers = (req, res)=> {
-    res.status(200).json({users: getAllUsers()});
-};
+class UserController {
+    constructor() {
+        this.userService = new UserService();
+    }
 
-export const removeUser = (req, res) =>{
-    const id = parseInt(req.params.id);
-    deleteUser(id);
-    res.status(200).json({message: "User Deleted."});
+    register = async (req, res) => {
+        try {
+            const dto = new UserRegisterRequest(
+                req.body.username,
+                req.body.email,
+                req.body.password
+            );
+
+            const result = await this.userService.register(dto);
+            return res.status(201).json(result);
+        } catch (err) {
+            return res.status(400).json({ message: err.message });
+        }
+    };
+
+    login = async (req, res) => {
+        try {
+            const dto = new UserLoginRequest(
+                req.body.email,
+                req.body.password
+            );
+
+            const result = await this.userService.login(dto);
+            return res.json(result);
+        } catch (err) {
+            return res.status(400).json({ message: err.message });
+        }
+    };
 }
+
+export default UserController;

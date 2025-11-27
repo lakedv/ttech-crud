@@ -1,25 +1,54 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import UserRepository from "../Repositories/UserRepository.js";
+import UserResponse from "../DTOs/UserResponse.js";
 
-let users = [];
+class UserService {
+    constructor() {
+        this.userRepository = new UserRepository();
+    }
 
-export const createUser = async (email, password) => {
-    const existing = users.find(u => u.email === email);
-    if(existing) throw new Error("User already exists");
+    async register(dto) {
+        const existingUser = await this.userRepository.findByEmail(dto.email);
+        if (existingUser) {
+            throw new Error("Email already registered");
+        }
 
-    const hashed = await bcrypt.hash(password, 10);
-    const newUser = {id: users.length + 1, email, password: hashed};
-    users.push(newUser);
-    return newUser;
-};
+        const passwordHash = await bcrypt.hash(dto.password, 10);
 
-export const findUserByEmail = (email) =>{
-    return users.find(u => u.email === email);
-};
+        const newUser = {
+            username: dto.username,
+            email: dto.email,
+            passwordHash: passwordHash
+        };
 
-export const getAllUsers = () => {
-    return users.map(u => ({id: u.id, email: u.email}));
-};
+        const created = await this.userRepository.createUser(newUser);
 
-export const deleteUser = (id) => {
-    users = users.filter(u => u.id !== id);
-};
+        return new UserResponse(created.id, created.username, created.email);
+    }
+
+    async login(dto) {
+        const user = await this.userRepository.findByEmail(dto.email);
+        if (!user) {
+            throw new Error("Invalid credentials");
+        }
+
+        const isMatch = await bcrypt.compare(dto.password, user.passwordHash);
+        if (!isMatch) {
+            throw new Error("Invalid credentials");
+        }
+
+        const token = jwt.sign(
+            { userId: user.id, email: user.email },
+            process.env.JWT_SECRET,
+            { expiresIn: process.env.JWT_EXPIRES_IN }
+        );
+
+        return {
+            token,
+            user: new UserResponse(user.id, user.username, user.email)
+        };
+    }
+}
+
+export default UserService;

@@ -1,32 +1,23 @@
-import { collection, addDoc, getDocs, doc, getDoc, query, where } from "firebase/firestore";
 import db from "../Data/DbContext.js";
 
 class UserRepository {
-    constructor(){
-        this.collectionRef = collection(db, "users");
+
+    constructor() {
+        this.usersRef = db.collection("users");
     }
 
-    async addU(user){
-        const docRef = await addDoc(this.collectionRef, {...user});
-        return {id: docRef.id, ...user};
+    async findByEmail(email) {
+        const snapshot = await this.usersRef.where("email", "==", email).get();
+
+        if (snapshot.empty) return null;
+
+        return { id: snapshot.docs[0].id, ...snapshot.docs[0].data() };
     }
 
-    async findByEmail(email){
-        const q = query(this.collectionRef, where("email", "==", email));
-        const snapshot = await getDocs(q);
-
-        if(snapshot.empty) return null;
-
-        const docSnap = snapshot.docs[0];
-        return {id: docSnap.id, ...docSnap.data()};
-    }
-
-    async getById(id){
-        const docRef = doc(db, "users", id);
-        const docSnap = await getDoc(docRef);
-        if (!docSnap.exists()) return null;
-        return {id: docSnap.id, ...docSnap.data()};
+    async createUser(user) {
+        const docRef = await this.usersRef.add(user);
+        return { id: docRef.id, ...user };
     }
 }
 
-export default new UserRepository();
+export default UserRepository;

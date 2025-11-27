@@ -1,6 +1,5 @@
-class Product {
-    constructor({id, name, price, description, stock, category, createdAt, createdBy})
-    {
+class ProductResponse {
+    constructor(id, name, price, description, stock, category, createdAt, createdBy) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -12,4 +11,4 @@ class Product {
     }
 }
 
-export default Product;
+export default ProductResponse;

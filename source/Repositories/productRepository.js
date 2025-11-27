@@ -1,38 +1,56 @@
-import { collection, addDoc, getDocs, doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
 import db from "../Data/DbContext.js";
 
 class ProductRepository {
-    constructor() {
-        this.collectionRef = collection(db, "products");
+    constructor(){
+        this.productsRef = db.collection("products");
     }
-    async addP(product){
-        const docRef = await addDoc(this.collectionRef, {...product});
+
+    async create(product){
+        const docRef = await this.productsRef.add(product);
         return {id: docRef.id, ...product};
     }
 
     async getAll(){
-        const snapshot = await getDocs(this.collectionRef);
-        return snapshot.docs.map(doc => ({id: doc.id, ...doc.data() }));
+        const snapshot = await this.productsRef.get();
+        if (snapshot.empty) return [];
+
+        return snapshot.docs.map(doc=>({
+            id: doc.id,
+            ...doc.data()
+        }));
+    }
+    
+    async getAllByUser(userId){
+        const snapshot = await this.productsRef
+        .where("createdBy", "==", userId)
+        .get();
+
+        if(snapshot.empty) return [];
+
+        return snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
     }
 
     async getById(id){
-        const docRef = doc(db, "products", id);
-        const docSnap = await getDoc(docRef);
-        if (!docSnap.exists()) return null;
-        return {id: docSnap.id, ...docSnap.data()};
+        const doc = await this.productsRef.doc(id).get();
+        if(!doc.exists) return null;
+
+        return {id: doc.id, ...doc.data()};
     }
 
-    async updateP(id, updates){
-        const docRef = doc(db, "products", id);
-        await updateDoc(docRef, updates);
-        return true;
+    async update(id, data){
+        const docRef = this.productsRef.doc(id);
+        await docRef.update(data);
+        const updated = await docRef.get();
+        return {id: updated.id, ...updated.data()};
     }
 
-    async deleteP(id){
-        const docRef = doc(db, "products", id);
-        await deleteDoc(docRef);
+    async delete(id){
+        await this.productsRef.doc(id).delete();
         return true;
     }
 }
 
-export default new ProductRepository();
+export default ProductRepository;
