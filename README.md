@@ -1,176 +1,222 @@
-# Talento TECH API
+# TALENTO TECH API
 
-API RESTful construida con **Node.js + Express**, estructurada
-con capas de **Controllers, Services, Repositories,
-DTOs y Middlewares**, utilizando **Firebase Firestore** como base de
-datos y autenticación mediante **JWT**.
+API RESTful desarrollada con **Node.js + Express**, desplegada en **Vercel**, siguiendo una arquitectura profesional basada en **Controllers, Services, Repositories, DTOs, Validators y Middlewares**, utilizando **Firebase Firestore** como base de datos.
 
-Incluye validación, manejo global de errores, health check avanzado y
-excepciones personalizadas.
+Incluye autenticación con **JWT**, validación, manejo global de errores, arquitectura en capas y un health-check completo.
 
-## Estructura del Proyecto
+---
 
-    source/
+# Deploy en Producción
+
+**Base URL:** https://ttech-crud.vercel.app  
+Todos los endpoints se mantienen igual, solo cambia la base URL.
+
+---
+
+# 📁 Estructura del Proyecto
+
+```
+C:.
+│   .env
+│   .gitignore
+│   package-lock.json
+│   package.json
+│   README.md
+│   vercel.json
+│
+├───api
+│       index.js
+│
+└───source
+    ├───controllers
+    │       health.controller.js
+    │       product.controller.js
+    │       user.controller.js
     │
-    ├── Controllers/
-    │     ├── healthController.js
-    │     ├── ProductController.js
-    │     └── UserController.js
+    ├───data
+    │       db.context.js
     │
-    ├── Data/
-    │     └── DbContext.js
+    ├───dtos
+    │       product-create.request.js
+    │       product-update.request.js
+    │       product.response.js
+    │       user-login.request.js
+    │       user-register.request.js
+    │       user.response.js
     │
-    ├── DTOs/
-    │     ├── ProductCreateRequest.js
-    │     ├── ProductResponse.js
-    │     ├── ProductUpdateRequest.js
-    │     ├── UserLoginRequest.js
-    │     ├── UserRegisterRequest.js
-    │     └── UserResponse.js
+    ├───exceptions
+    │       bad-request.exception.js
+    │       base.exception.js
+    │       conflict.exception.js
+    │       firestore.exception.js
+    │       not-found.exception.js
+    │       unauthorized.exception.js
+    │       validation.exception.js
     │
-    ├── Exceptions/
-    │     ├── BadRequestException.js
-    │     ├── BaseException.js
-    │     ├── ConflictException.js
-    │     ├── FirestoreException.js
-    │     ├── NotFoundException.js
-    │     ├── UnauthorizedException.js
-    │     └── ValidationException.js
+    ├───middleware
+    │       auth.middleware.js
+    │       error-handler.middleware.js
     │
-    ├── Middleware/
-    │     ├── authMiddleware.js
-    │     └── errorHandlerMiddleware.js
+    ├───models
+    │       product.js
+    │       user.js
     │
-    ├── Models/
-    │     ├── Product.js
-    │     └── User.js
+    ├───repositories
+    │       product.repository.js
+    │       user.repository.js
     │
-    ├── Repositories/
-    │     ├── ProductRepository.js
-    │     └── UserRepository.js
+    ├───routes
+    │       health-routes.js
+    │       product-routes.js
+    │       user-routes.js
     │
-    ├── Routes/
-    │     ├── healthRoutes.js
-    │     ├── ProductRoutes.js
-    │     └── UserRoutes.js
+    ├───services
+    │       product.service.js
+    │       user.service.js
     │
-    ├── Services/
-    │     ├── ProductService.js
-    │     └── UserService.js
+    ├───utility
+    │       health-check.js
     │
-    ├── Utility/
-    │     └── healthCheck.js
-    │
-    └── Validators/
-           └── ProductValidator.js
+    └───validators
+            product-validator.js
+```
 
-## Tecnologías Utilizadas
+---
 
--   Node.js + Express
--   Firebase Firestore
--   Firebase Admin
--   JWT (jsonwebtoken)
--   bcrypt
--   Validación de DTOs
--   Middlewares personalizados
--   Excepciones personalizadas
--   dotenv
--   nodemon
+# Tecnologías Utilizadas
 
-## Instalación
+- Node.js + Express  
+- Firebase Firestore  
+- Firebase Admin  
+- JWT (jsonwebtoken)  
+- bcrypt  
+- DTOs (Data Transfer Objects)  
+- Validadores personalizados  
+- Arquitectura basada en capas  
+- dotenv  
+- CORS  
+- Manejo de errores centralizado  
 
-    npm install
+---
 
-Crear archivo `.env`:
+# Instalación
 
-    PORT=3000
-    JWT_SECRET=tu_clave_segura
+### 1. Instalar dependencias
+```
+npm install
+```
 
-    FIREBASE_PROJECT_ID=...
-    FIREBASE_CLIENT_EMAIL=...
-    FIREBASE_PRIVATE_KEY=...
+### 2. Crear archivo `.env`
 
-##  Ejecutar la API
+```
+PORT=3000
+JWT_SECRET=tu_clave_segura
 
-Modo desarrollo:
+FIREBASE_PROJECT_ID=xxxxx
+FIREBASE_CLIENT_EMAIL=xxxxx
+FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----
+TUBASE64OFORMATEADA
+-----END PRIVATE KEY-----"
+```
 
-    npm run dev
+*(En Vercel no hace falta el formateo manual, ya que se reemplaza con `.replace(/\n/g, "\n")`)*
 
-Modo producción:
+---
 
-    npm start
+# Ejecutar el Proyecto
 
-# Autenticación (JWT)
+### Modo desarrollo:
+```
+npm run dev
+```
 
-Enviar en endpoints protegidos:
+### Modo producción:
+```
+npm start
+```
 
-    Authorization: Bearer <token>
+---
 
-# Endpoints
+# Autenticación
 
-## Usuarios --- `/users`
+Los endpoints protegidos requieren:
 
-### POST `/users/register`
+```
+Authorization: Bearer <token>
+```
 
+El token se obtiene desde `/api/users/login`.
+
+---
+
+#  Endpoints Principales
+
+---
+
+## Usuarios — `/api/users`
+
+### **POST** `/register`
 Body:
-
-``` json
+```json
 {
   "email": "user@example.com",
   "password": "123456"
 }
 ```
 
-### POST `/users/login`
-
+### **POST** `/login`
 Respuesta:
-
-``` json
+```json
 {
   "token": "..."
 }
 ```
 
-## Productos --- `/products`
+---
 
-(Requiere JWT)
+## Productos — `/api/products` *(Requiere JWT)*
 
-### GET `/products`
+### GET `/`
+### GET `/:id`
+### POST `/`
+### PUT `/:id`
+### DELETE `/:id`
 
-### GET `/products/:id`
+---
 
-### POST `/products`
+## Health — `/api/health`
 
-### PUT `/products/:id`
+Retorna:
+- uptime  
+- estado del servidor  
+- estado Firestore  
+- variables críticas  
+- memoria utilizada  
 
-### DELETE `/products/:id`
+---
 
-# Health Check --- `/health`
+# Arquitectura Interna
 
-Devuelve estado, memoria, uptime, conexión a Firestore, variables de
-entorno críticas.
+- **Controllers** → reciben request/response  
+- **Services** → lógica de negocio  
+- **Repositories** → acceso a Firestore  
+- **DTOs** → entrada/salida tipada  
+- **Middlewares** → auth + manejo de errores  
+- **Validators** → validación de requests  
+- **Exceptions** → errores personalizados centralizados  
 
-#  Arquitectura Interna
+---
 
-Controllers, Services, Repositories, DTOs, Validators, Middlewares,
-Excepciones personalizadas.
+# Seguridad
 
-#  Postman
+- JWT seguro  
+- Hash con bcrypt  
+- Validación estricta  
+- Manejo global de errores  
+- Sin exposición de datos sensibles  
 
-1.  Registrar usuario\
-2.  Login → copiar token\
-3.  Usar header: `Authorization: Bearer <token>`\
-4.  Consumir endpoints
+---
 
-#  Seguridad
+# Licencia
 
--   Hash de contraseñas\
--   JWT seguro\
--   Validación\
--   Manejo global de errores\
--   Firestore abstraído\
--   Sin exponer info sensible
-
-#  Licencia
-
-MIT © G. Mirarchi
+MIT © 2025 — G. Mirarchi
