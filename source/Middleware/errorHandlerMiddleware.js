@@ -5,7 +5,7 @@ import { BadRequestException } from "../Exceptions/BadRequestException.js";
 import { ConflictException } from "../Exceptions/ConflictException.js";
 import { FirestoreException } from "../Exceptions/FirestoreException.js";
 
-export function errorHandlerMiddleware(err, req, res, next){
+export default function errorHandlerMiddleware(err, req, res, next){
     if (err instanceof ValidationException){
         return res.status(400).json({
             errorType: "Validation Error",
