@@ -1,9 +1,9 @@
-import ProductRepository from "../Repositories/ProductRepository.js";
-import ProductValidator from "../Validators/ProductValidator.js";
+import ProductRepository from "../repositories/product.repository.js";
+import ProductValidator from "../validators/product-validator.js";
 
-import ProductCreateRequest from "../DTOs/ProductCreateRequest.js";
-import ProductUpdateRequest from "../DTOs/ProductUpdateRequest.js";
-import ProductResponse from "../DTOs/ProductResponse.js";
+import ProductCreateRequest from "../dtos/product-create.request.js";
+import ProductUpdateRequest from "../dtos/product-update.request.js";
+import ProductResponse from "../dtos/product.response.js";
 
 class ProductService{
     constructor() {

@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import UserRepository from "../Repositories/UserRepository.js";
-import UserResponse from "../DTOs/UserResponse.js";
+import UserRepository from "../repositories/user.repository.js";
+import UserResponse from "../dtos/user.response.js";
 
 class UserService {
     constructor() {

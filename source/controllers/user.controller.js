@@ -1,6 +1,6 @@
-import UserService from "../Services/UserService.js";
-import UserRegisterRequest from "../DTOs/UserRegisterRequest.js";
-import UserLoginRequest from "../DTOs/UserLoginRequest.js";
+import UserService from "../services/user.service.js";
+import UserRegisterRequest from "../dtos/user-register.request.js";
+import UserLoginRequest from "../dtos/user-login.request.js";
 
 class UserController {
     constructor() {
