@@ -10,6 +10,7 @@ import { errorHandlerMiddleware } from "../source/Middleware/errorHandlerMiddlew
 dotenv.config();
 
 const app = express();
+const PORT = process.env.PORT;
 
 app.use(cors({
     origin: "*",
@@ -30,4 +31,7 @@ app.get("/", (req, res)=>{
 
 app.use(errorHandlerMiddleware);
 
-export default app;
+
+app.listen(PORT, () => {
+  console.log(`Api is listening on http://localhost:${PORT}/`)
+})
