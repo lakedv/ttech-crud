@@ -1,4 +1,4 @@
-import { BaseException } from "./BaseException.js";
+import { BaseException } from "./base.exception.js";
 
 export class NotFoundException extends BaseException{
     constructor(message = "Resource not Found"){

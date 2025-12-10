@@ -1,4 +1,4 @@
-import { BaseException } from "./BaseException.js";
+import { BaseException } from "./base.exception.js";
 
 export class BadRequestException extends BaseException{
     constructor(message = "Bad Request"){

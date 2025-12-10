@@ -1,9 +1,9 @@
-import { ValidationException } from "../Exceptions/ValidationException.js";
-import { NotFoundException } from "../Exceptions/NotFoundException.js";
-import { UnauthorizedException } from "../Exceptions/UnauthorizedException.js";
-import { BadRequestException } from "../Exceptions/BadRequestException.js";
-import { ConflictException } from "../Exceptions/ConflictException.js";
-import { FirestoreException } from "../Exceptions/FirestoreException.js";
+import { ValidationException } from "../exceptions/validation.exception.js";
+import { NotFoundException } from "../exceptions/not-found.exception.js";
+import { UnauthorizedException } from "../exceptions/unauthorized.exception.js";
+import { BadRequestException } from "../exceptions/bad-request.exception.js";
+import { ConflictException } from "../exceptions/conflict.exception.js";
+import { FirestoreException } from "../exceptions/firestore.exception.js";
 
 export default function errorHandlerMiddleware(err, req, res, next){
     if (err instanceof ValidationException){

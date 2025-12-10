@@ -1,4 +1,4 @@
-import { BaseException } from "./BaseException.js";
+import { BaseException } from "./base.exception.js";
 
 export class FirestoreException extends BaseException{
     constructor(message = "Firestore internal Error", originalError = null){

@@ -1,4 +1,4 @@
-import db from "../data/dbContext.js";
+import db from "../data/db.context.js";
 
 class UserRepository {
 

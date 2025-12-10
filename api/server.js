@@ -5,7 +5,7 @@ import cors from "cors";
 import userRoutes from "../source/routes/user-routes.js"; 
 import productRoutes from "../source/routes/product-routes.js";
 import healthRoutes from "../source/routes/health-routes.js"
-import errorHandlerMiddleware from "../source/Middleware/errorHandlerMiddleware.js";
+import errorHandlerMiddleware from "../source/middleware/error-handler.middleware.js";
 
 dotenv.config();
 
