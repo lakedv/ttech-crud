@@ -1,13 +1,12 @@
 import os from "os";
 import { performance } from "perf_hooks";
-import {db} from "./Data/DbContext.js";
+import db from "../Data/DbContext.js"
 
 const serverStartTime = new Date();
 
 const checkFirestore = async () => {
     const start = performance.now();
     try {
-        // Una lectura mínima para probar conexión
         await db.collection("health_test").limit(1).get();
 
         return {
