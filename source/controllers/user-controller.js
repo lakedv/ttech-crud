@@ -1,4 +1,4 @@
-import UserService from "../Services/UserService.js";
+import UserService from "../services/user-service.js";
 import UserRegisterRequest from "../DTOs/UserRegisterRequest.js";
 import UserLoginRequest from "../DTOs/UserLoginRequest.js";
 

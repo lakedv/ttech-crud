@@ -1,5 +1,5 @@
-import ProductRepository from "../Repositories/ProductRepository.js";
-import ProductValidator from "../Validators/ProductValidator.js";
+import ProductRepository from "../repositories/product-repository.js";
+import ProductValidator from "../validators/product-validator.js";
 
 import ProductCreateRequest from "../DTOs/ProductCreateRequest.js";
 import ProductUpdateRequest from "../DTOs/ProductUpdateRequest.js";

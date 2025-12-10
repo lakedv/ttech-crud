@@ -1,4 +1,4 @@
-import db from "../Data/DbContext.js";
+import db from "../data/dbContext.js";
 
 class ProductRepository {
     constructor(){

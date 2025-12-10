@@ -1,4 +1,4 @@
-import { getHealthStatus } from "../Utility/healthCheck.js";
+import { getHealthStatus } from "../utility/health-check.js";
 
 export const getHealth = async (req, res) => {
     const health = await getHealthStatus();

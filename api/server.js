@@ -2,9 +2,9 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 
-import userRoutes from "../source/Routes/UserRoutes.js"; 
-import productRoutes from "../source/Routes/ProductRoutes.js";
-import healthRoutes from "../source/Routes/healthRoutes.js"
+import userRoutes from "../source/routes/user-routes.js"; 
+import productRoutes from "../source/routes/product-routes.js";
+import healthRoutes from "../source/routes/health-routes.js"
 import errorHandlerMiddleware from "../source/Middleware/errorHandlerMiddleware.js";
 
 dotenv.config();
