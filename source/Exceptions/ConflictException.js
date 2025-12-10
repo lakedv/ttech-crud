@@ -1,4 +1,4 @@
-import { BaseException } from "./BaseException";
+import { BaseException } from "./BaseException.js";
 
 export class ConflictException extends BaseException{
     constructor(message = "Conflict"){

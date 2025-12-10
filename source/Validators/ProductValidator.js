@@ -1,4 +1,4 @@
-import { ValidationException } from "../Exceptions/ValidationException";
+import { ValidationException } from "../Exceptions/ValidationException.js";
 
 class ProductValidator {
     validateRequired(field, value, errors){
